@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MainPage</title>
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/Chart.min.js"></script>
+</head>
+<body>
+    <canvas id="panel" height="800px" width="1700px"></canvas>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+    <script>
+        $(
+            function () {
+                var can = $("#panel").get(0).getContext("2d");
+                var canData = {
+                    // labels: ["a", "b", "c", "d", "e", "f"],     // x轴坐标值
+                    labels: [0,0],
+                    datasets: [
+                        {
+                            fillColor: "rgba(255, 0, 0, 0.2)",  // 线条下的填充色
+                            strokeColor: "rgba(255, 0, 0, 1)",
+                            data: [10, 10]                 // y轴对应的值
+                        }
+                    ]
+                }
+                line = new Chart(can).Line(canData);
+                run_status = false;
+            }
+        )
+
+        $("#start").click(
+            function () {
+                if (run_status) {
+                    return;
+                }
+                timer = setInterval(
+                        function () {
+                            $.ajax( // 使用ajax
+                                {
+                                    type: "get",    // ajax请求类型
+                                    url:"/cgi-bin/pipeclient.py", // ajax请求的地址
+                                    data:"",    // 请求需要携带的数据
+                                    success: function (data) {
+                                        line.addData(
+                                            [data["loss"]], 
+                                            data["batch"]
+                                        )
+                                        var len = line.datasets[0].points.length;
+                                        if (len > 40){
+                                            line.removeData()
+                                        }
+                                        // console.log(data)
+                                    },  // 请求成功的回调函数
+                                    error: function (error) {
+                                        console.log(error)
+                                    }   // 请求失败的回调函数
+                                }
+                            )
+                        }, 1200
+                    )
+                run_status = true;
+            }
+        )
+        
+        $("#stop").click(
+            function () {
+                if (run_status) {
+                    clearInterval(timer);
+                    run_status = false;
+                }
+            }
+        )
+    </script>
+</body>
+</html>

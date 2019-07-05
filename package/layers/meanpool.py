@@ -1,6 +1,6 @@
 from .layer import Layer
 
-
+# 平均池化，用的很少，参考Maxpooling
 class MeanPooling(Layer):
     def __init__(self, size, **kwargs):
         self.size = size

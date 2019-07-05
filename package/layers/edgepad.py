@@ -1,9 +1,10 @@
 from .layer import Layer
 import numpy as np
 
-
+# 使用边界元素的值对数据进行填充，填充只发生在宽(W)高(H)两个维度上
 class EdgePad(Layer):
     def __init__(self, pad_width, **kwargs):
+        # pad_width: 填充的宽度
         self.top = self.bottom = self.left = self.right = pad_width
     
     def forward(self, x):

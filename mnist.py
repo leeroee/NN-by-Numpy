@@ -42,8 +42,9 @@ def train(net, loss_fn, train_file, batch_size, optimizer, load_file, save_as, t
             eta = loss_fn.gradient()
             net.backward(eta)
             optimizer.update()
-            print("loop: %d, batch: %5d, batch acc: %2.1f, batch loss: %.2f" % \
-                (loop, i, batch_acc*100, batch_loss))
+            if i % 50 == 0:
+                print("loop: %d, batch: %5d, batch acc: %2.1f, batch loss: %.2f" % \
+                    (loop, i, batch_acc*100, batch_loss))
         pass
     if save_as is not None: save(net.parameters, save_as)
     
@@ -66,4 +67,4 @@ if __name__ == "__main__":
     optimizer = optim.Adam(net.parameters, lr)
     train_file = './MNIST/trainset.npz'
     param_file = './MNIST/param.npz'
-    train(net, loss_fn, train_file, batch_size, optimizer, param_file, param_file, times=1, retrain=True)
+    train(net, loss_fn, train_file, batch_size, optimizer, None, None, times=1, retrain=True)

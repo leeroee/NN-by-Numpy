@@ -1,9 +1,10 @@
 from .layer import Layer
 import numpy as np
 
-
+# 以边界的元素为对称轴，对数据进行镜像填充，填充只发生在宽(W)高(H)两个维度上
 class ReflectionPad(Layer):
     def __init__(self, pad_width, **kwargs):
+        # pad_width: 填充的宽度
         self.top = self.bottom = self.left = self.right = pad_width
 
     def forward(self, x):
