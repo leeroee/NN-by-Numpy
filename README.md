@@ -1,7 +1,9 @@
 # NN-by-Numpy
 使用Numpy实现的一个小型神经网络框架，包括DNN、CNN中的各种Layer，诸如线形成、卷积层、池化层，ReLu、Sigmoid、Softmax等激活函数以及均方误差、交叉熵等损失函数
 
-具体原理讲解参见我的知乎文章
+代码中有些使用了einsum函数，该函数的使用方法见：[爱因斯坦求和约定](https://zhuanlan.zhihu.com/p/71639781)
+
+然后是各个模块的具体原理，参见我的知乎文章
 - [Numpy实现神经网络框架(1)](https://zhuanlan.zhihu.com/p/67716530)
 - [Numpy实现神经网络框架(2)——梯度下降、反向传播](https://zhuanlan.zhihu.com/p/74233026)
 - [Numpy实现神经网络框架(3)——线性层反向传播推导及实现](https://zhuanlan.zhihu.com/p/67854272)
